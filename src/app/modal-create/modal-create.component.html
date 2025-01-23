@@ -1,0 +1,46 @@
+<div class="modal-overlay" *ngIf="isModalVisible" (click)="cerrarModal()"></div>
+
+<div class="modal" *ngIf="isModalVisible">
+  <div class="modal-content">
+    <h2>Crear Registro</h2>
+    <form (ngSubmit)="crearRegistro()" #form="ngForm">
+      <div class="input-group">
+        <label for="nombre">Nombre</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          [(ngModel)]="registro.nombre"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="edad">Edad</label>
+        <input
+          type="number"
+          id="edad"
+          name="edad"
+          [(ngModel)]="registro.edad"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="estatura">Estatura</label>
+        <input
+          type="number"
+          id="estatura"
+          name="estatura"
+          [(ngModel)]="registro.estatura"
+          required
+        />
+      </div>
+
+      <button type="submit">Crear Registro</button>
+      <button type="button" class="close-btn" (click)="cerrarModal()">
+        Cancelar
+      </button>
+    </form>
+  </div>
+</div>

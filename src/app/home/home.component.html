@@ -1,0 +1,10 @@
+<div class="home-container">
+  <h1>Bienvenido</h1>
+  <div class="buttons-container">
+    <button (click)="abrirModal()">Crear</button>
+    <button (click)="revisarRegistros()">Revisar Registros</button>
+  </div>
+</div>
+<app-modal-create
+  (registroCreado)="procesarRegistro($event)"
+></app-modal-create>

@@ -1,0 +1,162 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Oscurecer un poco más el fondo */
+  z-index: 1000;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe; /* Fondo blanco con un tono más suave */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  width: 400px; /* Tamaño más grande */
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #352630; /* Color de texto más oscuro */
+}
+
+input {
+  width: 95%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #f3a36b; /* Color de borde más claro */
+  border-radius: 8px;
+  background-color: #f9f5e0; /* Fondo ligeramente amarillo */
+  color: #352630; /* Color del texto */
+}
+
+input:focus {
+  border-color: #cd5b51; /* Color del borde cuando está enfocado */
+  outline: none;
+  box-shadow: 0 0 8px rgba(205, 91, 81, 0.6); /* Agregar sombra al enfoque */
+}
+
+button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #cd5b51; /* Color de fondo principal */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Efecto de transición */
+}
+
+button:hover {
+  background-color: #f3a36b; /* Color cuando se pasa el ratón */
+  transform: scale(1.05); /* Aumentar el tamaño al hacer hover */
+}
+
+.close-btn {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #bbb;
+  color: #352630;
+  border: none;
+  margin-left: 3%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+  background-color: #999; /* Color cuando se pasa el ratón */
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #554865;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Asegurarse de que el modal no se quede demasiado pequeño en pantallas pequeñas */
+@media (max-width: 480px) {
+  .modal {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .modal-content {
+    gap: 15px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input {
+    padding: 10px;
+  }
+
+  button, .close-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+/* Fondo oscuro de la overlay con transición */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0); /* Inicialmente completamente transparente */
+  z-index: 1000;
+  transition: background-color 0.5s ease; /* Transición de fondo */
+}
+
+/* Estilo del modal con animación de escala y opacidad */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  width: 400px;
+  opacity: 0;  /* Inicia con opacidad 0 */
+  transform: translate(-50%, -50%) scale(0.9); /* Inicia con un pequeño zoom hacia adentro */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Transición de opacidad y escala */
+}
+
+/* Estilo de la overlay cuando el modal se muestra */
+.modal-overlay.show {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro cuando se muestra */
+}
+
+/* Estilo del modal cuando se muestra (opacidad y escala normales) */
+.modal.show {
+  opacity: 1;  /* Opacidad completa */
+  transform: translate(-50%, -50%) scale(1); /* Escala normal */
+}
