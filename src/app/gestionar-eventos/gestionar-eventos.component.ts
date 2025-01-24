@@ -4,7 +4,7 @@ import { Evento, EventoIsncritos, Inscripcion } from '../services/api';
 import { CommonModule } from '@angular/common';
 import {AuthServiceJwt} from '../services/ownServices/auth.servicejwt'
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';  
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 import { Location } from '@angular/common';
@@ -12,32 +12,32 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-gestionar-eventos',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule,HttpClientModule], 
+  imports: [CommonModule,ReactiveFormsModule,HttpClientModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   templateUrl: './gestionar-eventos.component.html',
-  styleUrls: ['./gestionar-eventos.component.css']  
+  styleUrls: ['./gestionar-eventos.component.css']
 })
 export class GestionarEventosComponent implements OnInit {
-  private eventosService = inject(EventosService); 
-  private apijwtService = inject(AuthServiceJwt);  
-  
+  private eventosService = inject(EventosService);
+  private apijwtService = inject(AuthServiceJwt);
+
   public usuarioId: number =0;
 
-  eventoForm: FormGroup;  
-  isEditing = false; 
-  eventoEditado: EventoIsncritos = {};  
+  eventoForm: FormGroup;
+  isEditing = false;
+  eventoEditado: EventoIsncritos = {};
 
-  eventos: EventoIsncritos[] = []; 
-  displayedColumns: string[] = ['nombre', 'descripcion', 'fechaHora', 'ubicacion', 'capacidad',"Usuarios Registrados","inscrito", 'acciones']; 
+  eventos: EventoIsncritos[] = [];
+  displayedColumns: string[] = ['nombre', 'descripcion', 'fechaHora', 'ubicacion', 'capacidad',"Usuarios Registrados","inscrito", 'acciones'];
   loading = false;
   constructor(private fb: FormBuilder, private location: Location
   ) {
     this.eventoForm = this.fb.group({
-      capacidad: ['', [Validators.required, Validators.min(1)]], 
-      fechaHora: ['', Validators.required],  
-      ubicacion: ['', Validators.required]  
+      capacidad: ['', [Validators.required, Validators.min(1)]],
+      fechaHora: ['', Validators.required],
+      ubicacion: ['', Validators.required]
     });
   }
 
@@ -48,9 +48,9 @@ export class GestionarEventosComponent implements OnInit {
   }
 
   editarEvento(evento: EventoIsncritos) {
-    this.eventoEditado =evento ; 
+    this.eventoEditado =evento ;
     this.eventoForm.patchValue(this.eventoEditado);
-    this.isEditing = true; 
+    this.isEditing = true;
     console.log(this.isEditing);
   }
 
@@ -84,12 +84,12 @@ export class GestionarEventosComponent implements OnInit {
       this.editarEventoService(formValues.capacidad,formValues.fechaHora,formValues.ubicacion)
     }
   }
-  
+
     cerrarModal(): void {
-      this.isEditing = false; 
+      this.isEditing = false;
     }
   inscrbirEvento(eventoId:number){
-    const now = new Date(); 
+    const now = new Date();
     const formattedNow = now.toISOString();
     const inscripcion: Inscripcion = {};
     const idEventoUser: number=this.apijwtService.getUser()??0;
@@ -100,10 +100,11 @@ export class GestionarEventosComponent implements OnInit {
     this.eventosService.apiEventosInscribirEventoPost(inscripcion,'response').subscribe(
       (response) => {
         const idIns: boolean = response.body?.data ?? false;
-        alert ("Inscripcion Completada id")     
+        this.obtenerEventos();
+        alert ("Inscripcion Completada id")
        },
       (error) => {
-        alert (error["error"]["message"])     
+        alert (error["error"]["message"])
       }
     );
   }
@@ -111,10 +112,11 @@ export class GestionarEventosComponent implements OnInit {
     this.eventosService.apiEventosDesactivarEventoPost(eventoId,'response').subscribe(
       (response) => {
         const idIns: boolean = response.body?.data ?? false;
-        alert ("Evento Desactivado")     
+        this.obtenerEventos();
+        alert ("Evento Desactivado")
        },
       (error) => {
-        alert (error["error"]["message"])     
+        alert (error["error"]["message"])
       }
     );
   }
@@ -126,6 +128,7 @@ editarEventoService(capacidad:string,fechaHora:string,ubicacion:string){
   this.eventosService.apiEventosEditarEventoPost(evento_actualizar).subscribe(
     (response) => {
       alert("Evento Actualizado")
+      this.obtenerEventos();
       this.cerrarModal();  // Cierra el modal
     },
     (error) => {
