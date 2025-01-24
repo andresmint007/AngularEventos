@@ -1,77 +1,108 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+/>
+<div>
+  <h2>Gestión de Eventos</h2>
 
+  <!-- Botón para volver atrás -->
+  <button (click)="volverAtras()" class="btn-back">
+    <i class="fas fa-arrow-left"></i> Volver Atrás
+  </button>
+</div>
 <div class="table-container" *ngIf="!loading; else loadingTemplate">
-    <table class="eventos-table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Fecha y Hora</th>
-          <th>Ubicación</th>
-          <th>Capacidad</th>
-          <th>Usuarios Registrados</th> <!-- Nueva columna de acciones -->
-          <th>Inscrito</th> <!-- Nueva columna de acciones -->
-          <th>Acciones</th> <!-- Nueva columna de acciones -->
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let evento of eventos">
-          <td>{{ evento.nombre }}</td>
-          <td>{{ evento.descripcion }}</td>
-          <td>{{ evento.fechaHora | date: 'short' }}</td>
-          <td>{{ evento.ubicacion }}</td>
-          <td>{{ evento.capacidad }}</td>
-          <td>{{ evento.usuarios?.length || 0 }}</td>
-          <td>{{ evento.usuarios?.includes(usuarioId) ? "Si" : "No" }}</td>
+  <!-- Título de la sección -->
 
-          <td class="acciones">
-            <!-- Icono para editar -->
-            <button (click)="editarEvento(evento)" title="Editar">
-              <i class="fas fa-edit"></i>
-            </button>
-            <!-- Icono para eliminar -->
-            <button (click)="eliminarEvento(evento)" title="Eliminar">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-            <!-- Icono para inscribirse -->
-            <button (click)="inscribirseEvento(evento)" title="Inscribirse">
-              <i class="fas fa-user-plus"></i>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <table class="eventos-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha y Hora</th>
+        <th>Ubicación</th>
+        <th>Capacidad</th>
+        <th>Usuarios Registrados</th>
+        <th>Inscrito</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let evento of eventos">
+        <td>{{ evento.nombre }}</td>
+        <td>{{ evento.descripcion }}</td>
+        <td>{{ evento.fechaHora | date : "short" }}</td>
+        <td>{{ evento.ubicacion }}</td>
+        <td>{{ evento.capacidad }}</td>
+        <td>{{ evento.usuarios?.length || 0 }}</td>
+        <td>{{ evento.usuarios?.includes(usuarioId) ? "Si" : "No" }}</td>
+
+        <td class="acciones">
+          <button (click)="editarEvento(evento)" title="Editar">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="eliminarEvento(evento)" title="Eliminar">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+          <button (click)="inscribirseEvento(evento)" title="Inscribirse">
+            <i class="fas fa-user-plus"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Plantilla de carga -->
+<ng-template #loadingTemplate>
+  <p>Cargando eventos...</p>
+</ng-template>
+<!-- Modal de edición -->
+<div *ngIf="isEditing" class="modal-overlay">
+  <div class="modal-content">
+    <h2>Editar Evento</h2>
+    <form [formGroup]="eventoForm" (ngSubmit)="guardarEdicion()">
+      <div class="form-group">
+        <label for="capacidad">Capacidad Máxima</label>
+        <input
+          id="capacidad"
+          formControlName="capacidad"
+          type="number"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="fechaHora">Fecha y Hora</label>
+        <input
+          id="fechaHora"
+          formControlName="fechaHora"
+          type="datetime-local"
+          class="form-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="ubicacion">Ubicación</label>
+        <input
+          id="ubicacion"
+          formControlName="ubicacion"
+          type="text"
+          class="form-input"
+        />
+      </div>
+
+      <div class="modal-actions">
+        <button
+          type="submit"
+          [disabled]="eventoForm.invalid"
+          class="btn-primary"
+        >
+          Guardar
+        </button>
+        <button type="button" (click)="cerrarModal()" class="btn-secondary">
+          Cancelar
+        </button>
+      </div>
+    </form>
   </div>
-  
-  <!-- Plantilla de carga -->
-  <ng-template #loadingTemplate>
-    <p>Cargando eventos...</p>
-  </ng-template>
-  <!-- Modal de edición -->
-  <div *ngIf="isEditing" class="modal-overlay">
-    <div class="modal-content">
-      <h2>Editar Evento</h2>
-      <form [formGroup]="eventoForm" (ngSubmit)="guardarEdicion()">
-        <div class="form-group">
-          <label for="capacidad">Capacidad Máxima</label>
-          <input id="capacidad" formControlName="capacidad" type="number" class="form-input" />
-        </div>
-  
-        <div class="form-group">
-          <label for="fechaHora">Fecha y Hora</label>
-          <input id="fechaHora" formControlName="fechaHora" type="datetime-local" class="form-input" />
-        </div>
-  
-        <div class="form-group">
-          <label for="ubicacion">Ubicación</label>
-          <input id="ubicacion" formControlName="ubicacion" type="text" class="form-input" />
-        </div>
-  
-        <div class="modal-actions">
-          <button type="submit" [disabled]="eventoForm.invalid" class="btn-primary">Guardar</button>
-          <button type="button" (click)="cerrarModal()" class="btn-secondary">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  
+</div>

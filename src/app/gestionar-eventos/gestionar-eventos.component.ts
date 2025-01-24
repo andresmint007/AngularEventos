@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';  
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-gestionar-eventos',
@@ -31,7 +32,7 @@ export class GestionarEventosComponent implements OnInit {
   eventos: EventoIsncritos[] = []; 
   displayedColumns: string[] = ['nombre', 'descripcion', 'fechaHora', 'ubicacion', 'capacidad',"Usuarios Registrados","inscrito", 'acciones']; 
   loading = false;
-  constructor(private fb: FormBuilder  
+  constructor(private fb: FormBuilder, private location: Location
   ) {
     this.eventoForm = this.fb.group({
       capacidad: ['', [Validators.required, Validators.min(1)]], 
@@ -132,5 +133,7 @@ editarEventoService(capacidad:string,fechaHora:string,ubicacion:string){
     }
   );
 }
-
+volverAtras() {
+  this.location.back(); // Navegar atrás en el historial del navegador
+}
 }
