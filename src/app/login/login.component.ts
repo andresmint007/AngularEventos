@@ -1,8 +1,10 @@
 import { Component,inject  } from '@angular/core';
-import { FormsModule } from '@angular/forms';  // Para usar ngModel en el formulario
-import { RouterModule, Router } from '@angular/router';  // Importa Router y RouterModule
-import { EventosService } from '../services/api/api/eventos.service';  // Asegúrate de importar el servicio correcto
-import { API_CONFIG } from '../app.config';  // Importa tu archivo de configuración
+import { FormsModule } from '@angular/forms'; 
+import { RouterModule, Router } from '@angular/router';  
+import {AuthService} from '../services/api/api/auth.service'
+import {UsuarioService} from '../services/api/api/usuario.service'
+import {AuthServiceJwt} from '../services/ownServices/auth.servicejwt'
+import { LoginApp, Usuario, UsuarioRespuestaGeneral } from '../services/api';
 
 @Component({
   selector: 'app-login',
@@ -12,30 +14,46 @@ import { API_CONFIG } from '../app.config';  // Importa tu archivo de configurac
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  private apiService = inject(EventosService);  // Inyectamos el servicio de la API
+  private apiServiceLogin = inject(AuthService);  
+  private apiServiceUsers = inject(UsuarioService); 
 
   username: string = '';
   password: string = '';
-  constructor(private router: Router) {
-  }  // Inyecta Router
+  constructor(private router: Router,private authServiceJwt: AuthServiceJwt) {
+  } 
 
   onLogin(): void {
-    // Lógica simple de validación para el login
-    if (this.username === 'admin' && this.password === 'admin') {
-      this.obtenerEventos()
-      //this.router.navigate(['/home']);  // Redirige a la ruta '/home'
-    } else {
-      alert('Usuario o contraseña incorrectos.');
-    }
+    this.loginApp(this.username,this.password)    
   }
-  obtenerEventos() {
-    this.apiService.apiEventosObtenerEventosGet().subscribe(
-      (data) => {
-       console.log(data)
+  loginApp(email:string, password:string){
+    const loginData: LoginApp = {};
+    loginData.email=email,
+    loginData.password=password,
+    loginData.username =email,
+    this.apiServiceLogin.apiAuthLoginPost(loginData, 'response').subscribe(
+      (response:any) => {
+        console.log('Full Response (response):', response);
+        const token = response.body["token"]; 
+        this.authServiceJwt.saveToken(token);
+        this.guardarUsuario(email);
+        this.router.navigate(["/home"]);
       },
       (error) => {
-        console.error('Error al obtener eventos:', error);
+        alert('Error: '+ error["error"]["error"]);
       }
     );
   }
+guardarUsuario(email:string){
+  this.apiServiceUsers.apiUsuarioObtenerUsuarioEmailGet( email, 'response').subscribe(
+    (response) => {
+      const idUsuario = response.body?.data?.idUsuario ?? 0;
+      this.authServiceJwt.saveUser(idUsuario);
+    },
+    (error) => {
+      alert('Error: '+ error["error"]["error"]);
+    }
+  );
+} 
 }
+ 
+

@@ -10,6 +10,7 @@
 
 
 export interface EventoIsncritos { 
+    idEvento?: number;
     nombre?: string | null;
     descripcion?: string | null;
     fechaHora?: string;

@@ -4,8 +4,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); /* Oscurecer un poco más el fondo */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro cuando se muestra */
   z-index: 1000;
+  transition: background-color 0.5s ease; /* Transición de fondo */
 }
 
 .modal {
@@ -13,12 +14,24 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #fefefe; /* Fondo blanco con un tono más suave */
-  padding: 40px;
+  background-color: #fefefe;
+  padding: 50px; /* Aumentamos el padding para mayor espacio */
   border-radius: 12px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   z-index: 1001;
-  width: 400px; /* Tamaño más grande */
+  width: 600px; /* Hacemos el modal más grande */
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.9);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.modal-overlay.show {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro cuando el modal se muestra */
+}
+
+.modal.show {
+  opacity: 1;  /* Opacidad completa */
+  transform: translate(-50%, -50%) scale(1); /* Escala normal */
 }
 
 .modal-content {
@@ -32,46 +45,51 @@
 }
 
 label {
-  font-size: 16px;
+  font-size: 18px; /* Aumentamos el tamaño de fuente */
   font-weight: bold;
-  color: #352630; /* Color de texto más oscuro */
+  color: #352630;
 }
 
-input {
+input, textarea {
   width: 95%;
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
-  border: 2px solid #f3a36b; /* Color de borde más claro */
+  border: 2px solid #f3a36b;
   border-radius: 8px;
-  background-color: #f9f5e0; /* Fondo ligeramente amarillo */
-  color: #352630; /* Color del texto */
+  background-color: #f9f5e0;
+  color: #352630;
 }
 
-input:focus {
-  border-color: #cd5b51; /* Color del borde cuando está enfocado */
+textarea {
+  resize: vertical; /* Permite redimensionar verticalmente el textarea */
+  height: 120px; /* Altura para la descripción */
+}
+
+input:focus, textarea:focus {
+  border-color: #cd5b51;
   outline: none;
-  box-shadow: 0 0 8px rgba(205, 91, 81, 0.6); /* Agregar sombra al enfoque */
+  box-shadow: 0 0 8px rgba(205, 91, 81, 0.6);
 }
 
 button {
-  padding: 12px;
-  font-size: 16px;
-  background-color: #cd5b51; /* Color de fondo principal */
+  padding: 14px;
+  font-size: 18px; /* Aumentamos el tamaño de fuente en los botones */
+  background-color: #cd5b51;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s; /* Efecto de transición */
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-  background-color: #f3a36b; /* Color cuando se pasa el ratón */
-  transform: scale(1.05); /* Aumentar el tamaño al hacer hover */
+  background-color: #f3a36b;
+  transform: scale(1.05);
 }
 
 .close-btn {
-  padding: 12px;
-  font-size: 16px;
+  padding: 14px;
+  font-size: 18px;
   background-color: #bbb;
   color: #352630;
   border: none;
@@ -82,11 +100,11 @@ button:hover {
 }
 
 .close-btn:hover {
-  background-color: #999; /* Color cuando se pasa el ratón */
+  background-color: #999;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px; /* Aumentamos el tamaño del título */
   font-weight: bold;
   color: #554865;
   text-align: center;
@@ -94,14 +112,14 @@ h2 {
 }
 
 /* Asegurarse de que el modal no se quede demasiado pequeño en pantallas pequeñas */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .modal {
-    width: 90%;
-    padding: 20px;
+    width: 80%; /* Modal más pequeño en pantallas pequeñas */
+    padding: 30px;
   }
 
   .modal-content {
-    gap: 15px;
+    gap: 20px;
   }
 
   .input-group {
@@ -109,54 +127,36 @@ h2 {
   }
 
   label {
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  input {
-    padding: 10px;
+  input, textarea {
+    padding: 12px;
   }
 
   button, .close-btn {
-    padding: 10px;
-    font-size: 14px;
+    padding: 12px;
+    font-size: 16px;
   }
 }
-/* Fondo oscuro de la overlay con transición */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0); /* Inicialmente completamente transparente */
-  z-index: 1000;
-  transition: background-color 0.5s ease; /* Transición de fondo */
+
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: red;
 }
 
-/* Estilo del modal con animación de escala y opacidad */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fefefe;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  z-index: 1001;
-  width: 400px;
-  opacity: 0;  /* Inicia con opacidad 0 */
-  transform: translate(-50%, -50%) scale(0.9); /* Inicia con un pequeño zoom hacia adentro */
-  transition: opacity 0.5s ease, transform 0.5s ease; /* Transición de opacidad y escala */
+small {
+  color: red;
+}
+button:disabled {
+  background-color: #ccc; /* Color gris claro para botones deshabilitados */
+  color: #666; /* Texto gris oscuro */
+  cursor: not-allowed; /* Cursor de no permitido */
+  opacity: 0.6; /* Hacer que se vea un poco transparente */
 }
 
-/* Estilo de la overlay cuando el modal se muestra */
-.modal-overlay.show {
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro cuando se muestra */
-}
-
-/* Estilo del modal cuando se muestra (opacidad y escala normales) */
-.modal.show {
-  opacity: 1;  /* Opacidad completa */
-  transform: translate(-50%, -50%) scale(1); /* Escala normal */
+button:disabled:hover {
+  background-color: #ccc; /* Asegurarse de que no cambie el color al pasar el mouse */
+  transform: none; /* Evitar transformaciones en hover */
 }

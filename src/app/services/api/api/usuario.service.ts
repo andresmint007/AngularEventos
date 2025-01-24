@@ -17,7 +17,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 // @ts-ignore
-import { Usuario } from '../model/usuario';
+import { UsuarioRespuestaGeneral } from '../model/usuarioRespuestaGeneral';
 
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 })
 export class UsuarioService {
 
-    protected basePath = 'http://localhost';
+    protected basePath = 'https://localhost:7196';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -91,13 +91,20 @@ export class UsuarioService {
     }
 
     /**
+     * @param email 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiUsuarioObtenerUsuariosGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<Usuario>>;
-    public apiUsuarioObtenerUsuariosGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Usuario>>>;
-    public apiUsuarioObtenerUsuariosGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Usuario>>>;
-    public apiUsuarioObtenerUsuariosGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiUsuarioObtenerUsuarioEmailGet(email?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<UsuarioRespuestaGeneral>;
+    public apiUsuarioObtenerUsuarioEmailGet(email?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<UsuarioRespuestaGeneral>>;
+    public apiUsuarioObtenerUsuarioEmailGet(email?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<UsuarioRespuestaGeneral>>;
+    public apiUsuarioObtenerUsuarioEmailGet(email?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (email !== undefined && email !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>email, 'email');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -137,10 +144,11 @@ export class UsuarioService {
             }
         }
 
-        let localVarPath = `/api/Usuario/ObtenerUsuarios`;
-        return this.httpClient.request<Array<Usuario>>('get', `${this.configuration.basePath}${localVarPath}`,
+        let localVarPath = `/api/Usuario/ObtenerUsuarioEmail`;
+        return this.httpClient.request<UsuarioRespuestaGeneral>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -30,7 +30,7 @@ import { Configuration }                                     from '../configurat
 })
 export class AuthService {
 
-    protected basePath = 'http://localhost';
+    protected basePath = 'https://localhost:7196';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;

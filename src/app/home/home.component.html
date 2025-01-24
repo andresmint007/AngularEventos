@@ -3,8 +3,10 @@
   <div class="buttons-container">
     <button (click)="abrirModal()">Crear</button>
     <button (click)="revisarRegistros()">Revisar Registros</button>
+    <button (click)="cerrarSesion()">Cerrar sesión</button> <!-- Nuevo botón -->
   </div>
 </div>
+
 <app-modal-create
   (registroCreado)="procesarRegistro($event)"
 ></app-modal-create>

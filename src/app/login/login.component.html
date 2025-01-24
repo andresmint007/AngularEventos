@@ -3,14 +3,14 @@
   <form (ngSubmit)="onLogin()">
     <!-- Campo de Usuario -->
     <div class="input-group">
-      <label for="username">Usuario:</label>
+      <label for="username">Email:</label>
       <input
-        type="text"
+        type="email"
         id="username"
         [(ngModel)]="username"
         name="username"
         required
-        placeholder="Ingresa tu usuario"
+        placeholder="Ingresa tu email"
       />
     </div>
 

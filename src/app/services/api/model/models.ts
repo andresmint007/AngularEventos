@@ -6,4 +6,4 @@ export * from './inscripcion';
 export * from './int32RespuestaGeneral';
 export * from './loginApp';
 export * from './usuario';
-export * from './weatherForecast';
+export * from './usuarioRespuestaGeneral';

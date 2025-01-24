@@ -1,0 +1,208 @@
+.table-container {
+    margin: 20px auto;
+    max-width: 90%;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .eventos-table {
+    width: 80%;
+    border-collapse: separate; /* Permite bordes redondeados */
+    border-spacing: 0;
+    border: 1px solid #ddd; /* Borde exterior */
+    border-radius: 12px; /* Bordes redondeados */
+    overflow: hidden; /* Aplica el redondeo correctamente */
+  }
+  
+  .eventos-table th,
+  .eventos-table td {
+    text-align: left;
+    padding: 10px; /* Menos espacio para columnas más compactas */
+    border-bottom: 1px solid #ddd; /* Separación entre filas */
+  }
+  
+  .eventos-table th {
+    background-color: #f3a36b;
+    color: white;
+    font-weight: bold;
+    font-size: 14px; /* Fuente más pequeña */
+  }
+  
+  .eventos-table td {
+    font-size: 13px; /* Reduce el tamaño del texto */
+    color: #554865;
+  }
+  
+  .eventos-table tbody tr:nth-child(even) {
+    background-color: #fbf7f1; /* Un color más suave */
+  }
+  
+  .eventos-table tbody tr:hover {
+    background-color: #f3e3d7; /* Sutil color al pasar el mouse */
+  }
+  
+  .eventos-table th:first-child,
+  .eventos-table td:first-child {
+    border-left: none;
+  }
+  
+  .eventos-table th:last-child,
+  .eventos-table td:last-child {
+    border-right: none;
+  }
+  
+  /* Bordes redondeados en la tabla */
+  .eventos-table th:first-child {
+    border-top-left-radius: 12px;
+  }
+  
+  .eventos-table th:last-child {
+    border-top-right-radius: 12px;
+  }
+  
+  .eventos-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+  }
+  
+  .eventos-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+  }
+  .eventos-table button {
+    background: none;
+    border: none;
+    color: #352630;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .eventos-table button:hover {
+    background-color: #f3a36b;
+    border-radius: 6px;
+  }
+  
+  .eventos-table .acciones {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .eventos-table .acciones button i {
+    font-size: 20px; /* Ajusta el tamaño de los iconos */
+  }
+  /* Estilos del modal */
+/* Estilos del modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);  /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #e9dfcc;  /* Color de fondo similar al login */
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  h2 {
+    color: #554865;  /* Color para los títulos */
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  label {
+    font-size: 14px;
+    color: #352630;  /* Color oscuro para las etiquetas */
+    margin-bottom: 5px;
+  }
+  
+  .form-input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #f3a36b;  /* Borde similar al login */
+    border-radius: 5px;
+    background-color: #fefefe;
+    color: #352630;
+  }
+  
+  .form-input:focus {
+    border-color: #cd5b51;  /* Color de foco */
+    outline: none;
+    box-shadow: 0 0 5px rgba(205, 91, 81, 0.6);
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  button {
+    margin-top: 15px;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:disabled {
+    background-color: #d3d3d3;  /* Color cuando el botón está deshabilitado */
+    cursor: not-allowed;
+  }
+  
+  .btn-primary {
+    background-color: #cd5b51;  /* Color de fondo para el botón de guardar */
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: #f3a36b;  /* Color de hover para el botón de guardar */
+  }
+  
+  .btn-secondary {
+    background-color: #f3a36b;  /* Color de fondo para el botón de cancelar */
+    color: white;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #cd5b51;  /* Color de hover para el botón de cancelar */
+  }
+  
+  /* Animación de desvanecimiento del modal */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
